@@ -7,19 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.koreait.board7.user.UserVO;
+import com.koreait.board7.user.UserEntity;
 
-public class MyUtils {
-	/*
+public class MyUtils {	
 	public static int getLoginUserPk(HttpServletRequest req) {
 		if(req == null) { return 0; }		
 		return getLoginUser(req).getIuser();
 	}
-	*/
-	public static UserVO getLoginUser(HttpServletRequest req) {
+	
+	public static UserEntity getLoginUser(HttpServletRequest req) {
 		if(req == null) { return null; } 
 		HttpSession hs = req.getSession();
-		return (UserVO) hs.getAttribute("loginUser");
+		return (UserEntity) hs.getAttribute("loginUser");
 	}
 	
 	public static int getParamInt(String key, HttpServletRequest req) {
@@ -37,11 +36,19 @@ public class MyUtils {
 		}
 	}
 	
-	public static void openJSP(String fileNm, HttpServletRequest req, HttpServletResponse res)
+	public static void openJSP(String title, String jsp, 
+			HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-		String jsp = "/WEB-INF/view/" + fileNm + ".jsp";
-		req.getRequestDispatcher(jsp).forward(req, res);
+		req.setAttribute("title", title);
+		req.setAttribute("jsp", jsp);
+		String temp = "/WEB-INF/view/template.jsp";
+		req.getRequestDispatcher(temp).forward(req, res);
 	}
-	
-	
 }
+
+
+
+
+
+
+

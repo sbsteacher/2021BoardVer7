@@ -20,7 +20,7 @@
 		</nav>
 	</header>
 	<section>
-		<jsp:include page="/WEB-INF/view/${requestScope.page}.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/view/${requestScope.jsp}.jsp"></jsp:include>
 	</section>
 </body>
 </html>

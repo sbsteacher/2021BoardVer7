@@ -17,11 +17,12 @@ public class IdChkAjaxServlet extends HttpServlet {
 		String uid = request.getParameter("uid");		
 		System.out.println("uid : " + uid);
 		int result = UserDAO.selIdChk(uid);
-		
+	
 		response.getWriter()
 		.append("{\"result\": ")
 		.append(String.valueOf(result))
 		.append("}")
 		.close();
+		
 	}
 }

@@ -124,4 +124,46 @@ public class BoardDAO {
 		
 		return list;
 	}
+	
+	public static BoardDomain selBoard(BoardDTO param) {
+		BoardDomain result = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT B.unm as writerNm"
+				+ "	, A.iuser, A.regdt, A.title, A.ctnt "				
+				+ " FROM t_board A "
+				+ " INNER JOIN t_user B "
+				+ " ON A.iuser = B.iuser"
+				+ " WHERE A.iboard = ? ";
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getIboard());
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				result = new BoardDomain();
+				result.setIboard(param.getIboard());
+				result.setTitle(rs.getString("title"));
+				result.setCtnt(rs.getString("ctnt"));
+				result.setIuser(rs.getInt("iuser"));
+				result.setWriterNm(rs.getString("writerNm"));
+				result.setRegdt(rs.getString("regdt"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps, rs);
+		}		
+		return result;
+	}
+	
 }
+
+
+
+
+
+
+

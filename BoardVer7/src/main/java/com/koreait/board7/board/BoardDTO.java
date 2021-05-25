@@ -1,11 +1,18 @@
 package com.koreait.board7.board;
 
 public class BoardDTO {
+	private int iboard;
 	private int startIdx;
 	private int recordCnt;
 	private int searchType;
 	private String searchText;
 	
+	public int getIboard() {
+		return iboard;
+	}
+	public void setIboard(int iboard) {
+		this.iboard = iboard;
+	}
 	public int getSearchType() {
 		return searchType;
 	}

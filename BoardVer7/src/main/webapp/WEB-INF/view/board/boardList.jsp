@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<link rel="stylesheet" href="/res/css/boardList.css">
 <h1>리스트</h1>
-
 <table>
 	<tr>
 		<th>번호</th>
@@ -11,10 +11,29 @@
 		<th>작성일시</th>
 	</tr>
 	<c:forEach items="${requestScope.list}" var="item">
-		<tr>
+		<tr class="record" onclick="moveToDetail(${item.iboard});">
 			<td>${item.iboard}</td>
-			<td>${item.title}</td>
-			<td>${item.writerNm}</td>
+			<td>				
+				<c:choose>
+					<c:when test="${param.searchType eq 1 || param.searchType eq 2}">
+						${item.title.replace(param.searchText, '<mark>' += param.searchText += '</mark>')}
+					</c:when>
+					<c:otherwise>
+						${item.title}	
+					</c:otherwise>	
+				</c:choose>
+			</td>
+			<td>
+				<c:choose>
+					<c:when test="${param.searchType eq 4}">
+						${item.writerNm.replace(param.searchText, '<mark>' += param.searchText += '</mark>')}
+					</c:when>
+					<c:otherwise>
+						${item.writerNm}	
+					</c:otherwise>
+				</c:choose>
+				
+			</td>
 			<td>${item.regdt}</td>
 		</tr>
 	</c:forEach>
@@ -46,7 +65,7 @@
 		</div>
 	</form>
 </div>
-
+<script src="/res/js/boardList.js"></script>
 
 
 

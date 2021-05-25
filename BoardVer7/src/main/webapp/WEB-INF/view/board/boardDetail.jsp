@@ -15,7 +15,7 @@
 		<input type="button" value="댓글달기" onclick="regCmt();">
 	</form>
 </div>
-<div id=""></div>
+<div id="cmtList"></div>
 
 
 <script src="/res/js/boardDetail.js"></script>

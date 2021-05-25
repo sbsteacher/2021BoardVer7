@@ -27,7 +27,7 @@
 				<span class="colorRed">${page}</span>
 			</c:when>
 			<c:otherwise>
-				<span><a href="list?cPage=${page}">${page}</a></span>
+				<span><a href="list?cPage=${page}&searchType=${param.searchType}&searchText=${param.searchText}">${page}</a></span>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
@@ -36,12 +36,12 @@
 	<form action="list" method="get">
 		<div>
 			<select name="searchType">
-				<option value="1">제목+내용</option>
-				<option value="2">제목</option>
-				<option value="3">내용</option>
-				<option value="4">글쓴이</option>
+				<option value="1" ${param.searchType == 1 ? 'selected': ''}>제목+내용</option>
+				<option value="2" ${param.searchType == 2 ? 'selected': ''}>제목</option>
+				<option value="3" ${param.searchType == 3 ? 'selected': ''}>내용</option>
+				<option value="4" ${param.searchType == 4 ? 'selected': ''}>글쓴이</option>
 			</select>
-			<input type="search" name="searchText">
+			<input type="search" name="searchText" value="${param.searchText}">
 			<input type="submit" value="검색">
 		</div>
 	</form>

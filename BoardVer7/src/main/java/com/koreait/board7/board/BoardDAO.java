@@ -17,8 +17,10 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT CEIL(COUNT(iboard) / ?)")
-		.append("FROM t_board A");
+		sb.append(" SELECT CEIL(COUNT(iboard) / ?) ")
+		.append(" FROM t_board A ")
+		.append(" INNER JOIN t_user B ")
+		.append(" ON A.iuser = B.iuser ");
 		
 		if(param.getSearchType() > 0) {
 			sb.append(" WHERE ");
@@ -49,8 +51,7 @@ public class BoardDAO {
 			break;
 		}
 
-		try {
-			System.out.println(sb.toString());			
+		try {			
 			con = DBUtils.getCon();
 			ps = con.prepareStatement(sb.toString());
 			ps.setInt(1, param.getRecordCnt());			

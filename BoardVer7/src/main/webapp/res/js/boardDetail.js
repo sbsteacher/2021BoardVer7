@@ -1,9 +1,10 @@
 var cmtFrmElem = document.querySelector('#cmtFrm');
+var cmtListElem = document.querySelector('#cmtList');
 
 function regCmt() {
 	var cmtVal = cmtFrmElem.cmt.value;	
 	var param = {
-		iboard: cmtFrmElem.dataset.iboard,
+		iboard: cmtListElem.dataset.iboard,
 		cmt: cmtVal
 	};	
 	regAjax(param);
@@ -38,7 +39,7 @@ function regAjax(param) {
 
 //서버에게 댓글 리스트 자료 달라고 요청하는 함수
 function getListAjax() {
-	var iboard = cmtFrmElem.dataset.iboard;
+	var iboard = cmtListElem.dataset.iboard;
 	
 	fetch('cmtInsSel?iboard=' + iboard)
 	.then(function(res) {
@@ -52,7 +53,7 @@ function getListAjax() {
 }
 
 function makeCmtElemList(data) {
-	var cmtListElem = document.querySelector('#cmtList');
+	
 	cmtListElem.innerHTML = '';
 	
 	var tableElem = document.createElement('table');
@@ -75,7 +76,7 @@ function makeCmtElemList(data) {
 	tableElem.append(trElemTitle);	
 	cmtListElem.append(tableElem);
 	
-	var loginUserPk = cmtFrmElem.dataset.login_user_pk;
+	var loginUserPk = cmtListElem.dataset.login_user_pk;
 	
 	data.forEach(function(item) {
 		var trElemCtnt = document.createElement('tr');
@@ -92,6 +93,11 @@ function makeCmtElemList(data) {
 			var delBtn = document.createElement('button');
 			var modBtn = document.createElement('button');
 			
+			//삭제버튼 클릭시
+			delBtn.addEventListener('click', function() {
+				delAjax(item.icmt);
+			});
+			
 			delBtn.innerText = '삭제';
 			modBtn.innerText = '수정';
 			
@@ -105,9 +111,28 @@ function makeCmtElemList(data) {
 		trElemCtnt.append(tdElem4);
 		
 		tableElem.append(trElemCtnt);
-	});
-	
+	});	
 }
+
+function delAjax(icmt) {
+	fetch('cmtDelUpd?icmt=' + icmt)
+	.then(function(res) {
+		return res.json();
+	})
+	.then(function(data) {
+		console.log(data);
+		
+		switch(data.result) {
+			case 0:
+				alert('댓글 삭제를 실패하였습니다.');
+			break;
+			case 1:
+				getListAjax();
+			break;
+		}
+	});
+}
+
 getListAjax(); //이 파일이 임포트되면 함수 1회 호출!
 
 

@@ -79,7 +79,27 @@ public class BoardCmtDAO {
 	
 	
 	
-	
+	public static int delBoardCmt(BoardCmtEntity param) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = "DELETE FROM t_board_cmt WHERE icmt = ? AND iuser = ?";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getIcmt());
+			ps.setInt(2, param.getIuser());
+			
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}		
+		return result;
+	}
 	
 	
 	

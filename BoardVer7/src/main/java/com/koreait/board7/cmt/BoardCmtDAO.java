@@ -45,7 +45,8 @@ public class BoardCmtDAO {
 				+ " FROM t_board_cmt A"
 				+ " INNER JOIN t_user B"
 				+ " ON A.iuser = B.iuser"
-				+ " WHERE A.iboard = ?";
+				+ " WHERE A.iboard = ?"
+				+ " ORDER BY A.icmt ";
 		
 		try {
 			con = DBUtils.getCon();

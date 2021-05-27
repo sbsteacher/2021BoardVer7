@@ -1,5 +1,6 @@
 var cmtFrmElem = document.querySelector('#cmtFrm');
 var cmtListElem = document.querySelector('#cmtList');
+var cmtModModalElem = document.querySelector('#modal');
 
 function regCmt() {
 	var cmtVal = cmtFrmElem.cmt.value;	
@@ -95,7 +96,15 @@ function makeCmtElemList(data) {
 			
 			//삭제버튼 클릭시
 			delBtn.addEventListener('click', function() {
-				delAjax(item.icmt);
+				if(confirm('삭제하시겠습니까?')) {					
+					delAjax(item.icmt);
+				}
+			});
+			
+			//수정버튼 클릭시
+			modBtn.addEventListener('click', function() {
+				//댓글 수정 모달창 띄우기
+				openModModal(item);
 			});
 			
 			delBtn.innerText = '삭제';
@@ -131,6 +140,18 @@ function delAjax(icmt) {
 			break;
 		}
 	});
+}
+
+function openModModal({icmt, cmt}) {	
+	cmtModModalElem.className = '';
+	
+	var cmtModFrmElem = document.querySelector('#cmtModFrm');
+	cmtModFrmElem.icmt.value = icmt;
+	cmtModFrmElem.cmt.value = cmt;
+}
+
+function closeModModal() {
+	cmtModModalElem.className = 'displayNone';
 }
 
 getListAjax(); //이 파일이 임포트되면 함수 1회 호출!

@@ -18,7 +18,6 @@
 </c:if>
 <div id="cmtList" data-login_user_pk="${sessionScope.loginUser.iuser}" data-iboard="${param.iboard}"></div>
 
-
 <div id="modal" class="displayNone">
 	<div class="modal_content">
 		<form id="cmtModFrm" action="#">

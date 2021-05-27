@@ -36,10 +36,8 @@ public class UserMypageServlet extends HttpServlet {
 		
 		String targetFolder = uploadPath + "/user/" + loginUserPk;
 		
-		File folder = new File(targetFolder);
-		if(!folder.exists()) {
-			folder.mkdirs();
-		}
+		File folder = new File(targetFolder);		
+		folder.mkdirs();
 		
 		String fileNm = multi.getFilesystemName("profileImg");
 		System.out.println("fileNm: " + fileNm);

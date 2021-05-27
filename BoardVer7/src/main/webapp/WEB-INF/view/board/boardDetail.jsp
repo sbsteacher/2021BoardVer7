@@ -25,7 +25,7 @@
 			<input type="hidden" id="icmt">
 			<input type="text" id="cmt">
 		</form>
-		<input type="button" value="댓글 수정">
+		<input type="button" value="댓글 수정" onclick="modAjax();">
 		<input type="button" value="취소" onclick="closeModModal();">
 	</div>
 </div>

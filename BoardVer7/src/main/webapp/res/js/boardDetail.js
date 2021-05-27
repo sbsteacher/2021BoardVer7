@@ -142,6 +142,27 @@ function delAjax(icmt) {
 	});
 }
 
+function modAjax() {
+	var cmtModFrmElem = document.querySelector('#cmtModFrm');
+	var param = {
+		icmt: cmtModFrmElem.icmt.value,
+		cmt: cmtModFrmElem.cmt.value
+	}
+	
+	const init = {
+		method: 'POST',				
+	    body: new URLSearchParams(param)
+	};
+	
+	fetch('cmtDelUpd', init)
+	.then(function(res) {
+		return res.json();
+	})
+	.then(function(myJson) {
+		
+	});
+}
+
 function openModModal({icmt, cmt}) {	
 	cmtModModalElem.className = '';
 	

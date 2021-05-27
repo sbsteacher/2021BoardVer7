@@ -159,7 +159,15 @@ function modAjax() {
 		return res.json();
 	})
 	.then(function(myJson) {
-		
+		closeModModal();
+		switch(myJson.result) {
+			case 0:
+				alert('댓글 수정을 실패하였습니다.');
+			break;
+			case 1:
+				getListAjax();
+			break;
+		}
 	});
 }
 

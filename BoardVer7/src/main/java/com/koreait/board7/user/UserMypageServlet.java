@@ -24,6 +24,8 @@ public class UserMypageServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		String uploadPath = request.getServletContext().getRealPath("/res/img");
 		int maxFileSize = 10_485_760; // 10 * 1024 * 1024 (10mb)
 		
@@ -32,11 +34,13 @@ public class UserMypageServlet extends HttpServlet {
 		MultipartRequest multi = new MultipartRequest(request, uploadPath + "/temp", maxFileSize
 				, "UTF-8", new DefaultFileRenamePolicy());
 		
-		int loginUserPk = MyUtils.getLoginUserPk(request);
+		UserEntity loginUser = MyUtils.getLoginUser(request);
+		int loginUserPk = loginUser.getIuser();
 		
 		String targetFolder = uploadPath + "/user/" + loginUserPk;
 		
-		File folder = new File(targetFolder);		
+		File folder = new File(targetFolder);
+		folder.delete();
 		folder.mkdirs();
 				
 		String fileNm = multi.getFilesystemName("profileImg");
@@ -55,7 +59,8 @@ public class UserMypageServlet extends HttpServlet {
 		param.setIuser(loginUserPk);
 		param.setProfileImg(newFileNm);
 		
-		UserDAO.updUser(param);
+		UserDAO.updUser(param);		
+		loginUser.setProfileImg(newFileNm);
 		
 		doGet(request, response);
 	}

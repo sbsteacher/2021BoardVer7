@@ -12,7 +12,7 @@
 </c:choose>
 <div>
 	<form action="mypage" method="post" enctype="multipart/form-data">
-		이미지변경 : <input type="file" name="profileImg" accept="image/*">
+		이미지변경 : <input type="file" name="profileImg" accept="image/*">		
 		<input type="submit" value="이미지 업로드"> 
 	</form>
 </div>

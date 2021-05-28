@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,6 @@ public class UserMypageServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String uploadPath = request.getRealPath("/res/img/temp");
 		String uploadPath = request.getServletContext().getRealPath("/res/img");
 		int maxFileSize = 10_485_760; // 10 * 1024 * 1024 (10mb)
 		
@@ -38,7 +38,7 @@ public class UserMypageServlet extends HttpServlet {
 		
 		File folder = new File(targetFolder);		
 		folder.mkdirs();
-		
+				
 		String fileNm = multi.getFilesystemName("profileImg");
 		System.out.println("fileNm: " + fileNm);
 		
@@ -48,9 +48,16 @@ public class UserMypageServlet extends HttpServlet {
 		
 		String newFileNm = UUID.randomUUID().toString() + ext;
 		
-		File imgFile = new File(uploadPath + "/temp" + "/" + fileNm);
+		File imgFile = new File(uploadPath + "/temp/" + fileNm);
 		imgFile.renameTo(new File(targetFolder + "/" + newFileNm));
 		
+		UserEntity param = new UserEntity();
+		param.setIuser(loginUserPk);
+		param.setProfileImg(newFileNm);
+		
+		UserDAO.updUser(param);
+		
+		doGet(request, response);
 	}
 
 }
